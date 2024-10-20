@@ -210,11 +210,10 @@ section {
     background: var(--second-bg-color);
     align-items: center;
     gap: 1.5rem;
-    height: 648px;
+    height: 120vh;
 
     width: 100%;
     box-sizing: border-box;
-    padding: 20px;
 }
 
 .about-img img {
