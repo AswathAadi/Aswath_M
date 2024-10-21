@@ -301,7 +301,6 @@ section {
     height: 648px;
     width: 100%;
     box-sizing: border-box;
-    padding: 90px;
 }
 
 .contact {
@@ -527,6 +526,7 @@ form textarea {
     display: flex;
     justify-content: space-between;
     gap: 20px;
+    margin-top: 10vh;
 }
 
 .work-experience, .projects {
