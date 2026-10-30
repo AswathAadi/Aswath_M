@@ -1,183 +1,603 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aswath M | Lead Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2A2A2A;
+    --surface: #333333;
+    --rule: #3D3D3D;
+    --bone: #ECE8DF;
+    --muted: #9A9FB3;
+    --amber: #F2B45A;
+    --trace: #6FD3E0;
+    --display: "Poppins", system-ui, sans-serif;
+    --body: "Poppins", system-ui, sans-serif;
+  }
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VG193V45LH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  gtag('config', 'G-VG193V45LH');
-</script>
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+  }
 
+  body { overflow-x: hidden; }
 
+  :focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
 
-<!--Email Js Integration-->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
-</script>
-<script type="text/javascript">
-  (function() {
-    emailjs.init("3FaQ1e3YFn4Xdnj5B"); 
-  })();
-</script>
+  a { color: inherit; text-decoration: none; }
+  em { font-style: normal; }
 
-<!-- CSS and JS Reference -->
-    <script type="text/javascript" src="js/script.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  /* Side index */
+  .index {
+    position: fixed;
+    left: clamp(16px, 3vw, 48px);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 10;
+  }
+  .index a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--muted);
+    transition: color .2s;
+  }
+  .index a::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: var(--rule);
+    transition: width .3s, background .3s;
+  }
+  .index a:hover, .index a.active { color: var(--bone); }
+  .index a.active::before { width: 44px; background: var(--amber); }
 
+  /* Pages */
+  .page {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    position: relative;
+    padding: clamp(80px, 12vh, 140px) clamp(24px, 8vw, 140px) clamp(64px, 10vh, 110px) clamp(72px, 12vw, 200px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  #about, #contact { background: #202020; }
+
+  .page-inner { max-width: 1040px; width: 100%; }
+
+  h1, h2, h3 { font-weight: 600; line-height: 1.15; }
+  h2 {
+    font-size: clamp(36px, 4.5vw, 60px);
+    margin-bottom: 40px;
+  }
+  h2 em { color: var(--amber); }
+
+  /* Page 1: Introduction */
+  .hero { overflow: hidden; }
+  .hero-trace {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: .55;
+  }
+  .hero-trace path {
+    fill: none;
+    stroke: var(--trace);
+    stroke-width: 1;
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+    animation: draw 2.4s cubic-bezier(.6,.1,.2,1) forwards;
+  }
+  .hero-trace path:nth-child(2) { animation-delay: .4s; stroke: var(--amber); opacity: .7; }
+  .hero-trace path:nth-child(3) { animation-delay: .8s; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  .hero-name {
+    font-size: clamp(60px, 11vw, 150px);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -.02em;
+    position: relative;
+  }
+  .hero-name span { color: var(--amber); }
+  .hero-intro {
+    font-size: clamp(18px, 2vw, 24px);
+    color: var(--bone);
+    margin-top: 36px;
+    max-width: 60ch;
+    position: relative;
+  }
+  .hero-meta {
+    margin-top: 40px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 15px;
+    position: relative;
+  }
+  .hero-meta a { border-bottom: 1px solid var(--rule); padding-bottom: 2px; transition: border-color .2s, color .2s; }
+  .hero-meta a:hover { color: var(--bone); border-color: var(--amber); }
+
+  /* Page 2: About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .about-points { list-style: none; }
+  .about-points li {
+    position: relative;
+    padding: 18px 0 18px 36px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--bone);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  .about-points li:first-child { border-top: 1px solid var(--rule); }
+  .about-points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.7em;
+    width: 18px;
+    height: 1px;
+    background: var(--trace);
+  }
+
+  .skills { border-left: 1px solid var(--rule); padding-left: clamp(24px, 3vw, 40px); }
+  .skills h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--amber);
+    margin: 0 0 12px;
+  }
+  .skills ul {
+    list-style: none;
+    margin-bottom: 26px;
+  }
+  .skills li {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--bone);
+    font-size: 15px;
+  }
+  .skills li:last-child { border-bottom: none; }
+
+  /* Page 3: Experience and projects, side by side */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .flow {
+    list-style: none;
+    position: relative;
+  }
+  .flow::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: 6px;
+    width: 1px;
+    background: var(--trace);
+    opacity: .6;
+  }
+  .node {
+    position: relative;
+    padding: 0 0 36px 36px;
+  }
+  .node:last-child { padding-bottom: 0; }
+  .dot {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 13px;
+    height: 13px;
+    border: 1px solid var(--trace);
+    background: var(--ink);
+  }
+  .node:last-child .dot { background: var(--amber); border-color: var(--amber); }
+  .node-date { color: var(--muted); font-size: 14px; }
+  .node-org { font-size: 26px; font-weight: 600; line-height: 1.2; margin: 8px 0 4px; color: var(--bone); }
+  .node-role { color: var(--amber); font-size: 14px; font-weight: 600; }
+
+  .projects {
+    display: grid;
+    gap: 16px;
+  }
+  .project {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 24px 28px;
+    transition: border-color .25s;
+  }
+  .project:hover { border-color: var(--trace); }
+  .project h3 {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .project-label {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    transition: opacity .3s ease, max-height .3s ease, margin-top .3s ease;
+  }
+  .project:hover .stack,
+  .project:focus-visible .stack,
+  .project:focus-within .stack {
+    opacity: 1;
+    max-height: 200px;
+    margin-top: 14px;
+  }
+  /* Touch screens have no hover, so the tags stay visible there */
+  @media (hover: none) {
+    .stack { opacity: 1; max-height: none; margin-top: 14px; }
+  }
+  .stack span {
+    border: 1px solid var(--rule);
+    padding: 3px 10px;
+    color: var(--bone);
+  }
+
+  .education {
+    margin-top: 56px;
+    color: var(--muted);
+    font-size: 15px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .education strong { color: var(--bone); font-weight: 600; display: block; }
+
+  /* Page 4: Contact */
+  .contact-big {
+    font-size: clamp(36px, 4.5vw, 56px);
+    font-weight: 600;
+    line-height: 1.15;
+    margin-bottom: 36px;
+  }
+  .contact-big a {
+    color: var(--amber);
+    border-bottom: 1px solid var(--amber);
+    transition: opacity .2s;
+  }
+  .contact-big a:hover { opacity: .7; }
+
+  .contact-icons {
+    display: flex;
+    gap: 22px;
+    margin-bottom: 48px;
+  }
+  .contact-icons a {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    color: #CFCFCF;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    transition: color .2s, border-color .2s;
+  }
+  .contact-icons a:hover { color: var(--amber); border-color: var(--amber); }
+  .contact-icons svg { width: 24px; height: 24px; fill: currentColor; }
+
+  .contact-form {
+    max-width: 620px;
+    display: grid;
+    gap: 14px;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    background: var(--surface);
+    border: none;
+    border-radius: 8px;
+    padding: 18px 20px;
+    color: var(--bone);
+    font: inherit;
+    font-size: 15px;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: #8A8A8A; }
+  .contact-form textarea { min-height: 180px; resize: vertical; }
+  .contact-form button {
+    justify-self: start;
+    margin-top: 6px;
+    background: var(--amber);
+    color: #1E1E1E;
+    border: none;
+    border-radius: 6px;
+    padding: 14px 28px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s;
+  }
+  .contact-form button:hover { opacity: .9; }
+  .contact-form button:disabled { opacity: .6; cursor: default; }
+  .form-status { color: var(--muted); font-size: 15px; min-height: 1.6em; }
+
+  footer {
+    padding: 24px clamp(24px, 8vw, 140px) 24px clamp(72px, 12vw, 200px);
+    color: var(--muted);
+    font-size: 13px;
+    scroll-snap-align: end;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .index { display: none; }
+    .page { padding: 96px 24px 72px; min-height: auto; }
+    .about-grid, .split { grid-template-columns: 1fr; }
+    .skills { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 28px; }
+    html { scroll-snap-type: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero-trace path { animation: none; stroke-dashoffset: 0; }
+    * { transition: none !important; }
+  }
+</style>
 </head>
-
 <body>
-<!-----Header Section-->
-<header>
-    <a href="#" class="logo"><img src="https://github.com/AswathAadi/Aswath_M/blob/main/TTT.jpg?raw=true" alt="Your Logo" class="logo"></a>
-    <div class="main_container">
-        <ul class="navlist">
-            <li><a href="#home" class="active">Home</a></li>
-            <li><a href="#about">About Me</a></li>
-            <li><a href="#career">Career</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </div>
-    <div class="bx bx-menu" id="menu-icon"></div>
-</header>
 
-<main>
-<!--  Home Section  -->
-<section class="home" id="home">
-    <div class="home-text">
-        <div class="slide">
-            <span class="one">Hello</span>
-            <span class="two">I'm</span>
-        </div>
-        <h1>Aswath</h1>
-        <h3>Backend + AWS <span>Developer.</span></h3>
-        <p>Experienced .NET Developer specializing in creating scalable and efficient solutions. Get in touch, and let's create something amazing together!</p>
-        <div class="button">
-            <a href="#about" class="btn">About Me</a>
-            <!-- <a href="https://github.com/AswathAadi/Aswath_M/blob/b5aa0300ed395d770f8057b929a36bd3e966af7e/Aswath_CV.pdf" class="btn">Resume</a> -->
-        </div>
-    </div>
- </section>
+<nav class="index" aria-label="Sections">
+  <a href="#home" class="active">Introduction</a>
+  <a href="#about">About</a>
+  <a href="#experience">Experience and projects</a>
+  <a href="#contact">Contact</a>
+</nav>
 
- <!--  About Me Section  -->
- <section class="about" id = "about">
-    <div class="about-img">
-        <img src="https://raw.githubusercontent.com/AswathAadi/Aswath_M/refs/heads/main/TT.jpg">
-    </div>
-
-    <div class="about-text">
-        <h2>About<span>Me</span></h2>
-        <br>
-        Hello, I'm Aswath, a passionate and experienced .NET Backend Developer. With a strong background in C#, ASP.NET Core, MVC, LINQ, RESTful APIs, Enity Framework, MySql and SQL Server, API Gateway, AWS Lambda, SQS Queue.
-        <br>
-        <br>
-        <h4>What I Offer:</h4>
-        <div class="offer-container">
-            <ul class="offer-list">
-                <li> -> Expertise in designing and developing RESTful APIs for seamless communication between front-end and back-end.</li>
-                <li> -> Proficient in database design and optimization to ensure high-performance data management.</li>
-                <li> -> Skilled in implementing authentication and authorization mechanisms to safeguard user data.</li>
-                <li> -> Experience in integrating third-party services and APIs to enhance functionality.</li>
-                <li> -> Dedication to writing clean and maintainable code for scalable applications.</li>
-            </ul>
-        </div>
-    </div>
- </section>
-
- <!-- Career Section -->
-<section class = "career" id = "career">
-
-
-    <div class="career-container">
-        <!-- Work Experience Section -->
-        <div class="work-experience">
-            <h2>Work Experience</h2>
-            <ul>
-
-                <li>
-                    <h3>Accenture</h3>
-                    <p>Position: Application Development Senior Analyst</p>
-                    <p>Duration: Aug 2024 - Present</p>
-                </li>
-
-                <li>
-                    <h3>Sweya information technologies</h3>
-                    <p>Position: Software Engineer</p>
-                    <p>Duration: June 2023 - Aug 2024</p>
-                </li>
-                
-                <li>
-                    <h3>Syncfusion private limited</h3>
-                    <p>Position: Software Engineer Level 2</p>
-                    <p>Duration: May 2021 - June 2023</p>
-                </li>
-                
-            </ul>
-        </div>
-        
-        <!-- Projects Section -->
-        <div class="projects">
-            <h2>Projects</h2>
-            <ul>
-                <li>
-                    <h3>Passcode Management</h3>
-                    <p>Github Link: <a href="https://github.com/AswathAadi/PassCodeManager-SPAN" style="color: #00AAFF;" target="_blank">Click here</a></p>
-                </li>
-                <!--
-                <li>
-                    <h3>Project 2</h3>
-                    <p>Short description of the project and your role in it.</p>
-                </li>
-                <li>
-                    <h3>Project 3</h3>
-                    <p>Short description of the project and your role in it.</p>
-                </li>
-                -->
-            </ul>
-        </div>
-    </div>
-
-
+<!-- Page 1: Introduction -->
+<section class="page hero" id="home">
+  <svg class="hero-trace" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,620 H260 L300,580 H520 L560,540 H820 L860,500 H1200" />
+    <path d="M1200,140 H940 L900,180 H700 L660,220 H380 L340,260 H0" />
+    <path d="M180,0 V200 L220,240 V420 L260,460 V800" />
+  </svg>
+  <div class="page-inner">
+    <h1 class="hero-name">Aswath <span>M</span></h1>
+    <p class="hero-intro">Lead software engineer at UST Global services</p>
+  </div>
 </section>
 
- <!--   Contact section -->
- <section class="contact" id="contact">
-<div>
-        <h2>Contact <span>Me!</span></h2>
-<!--    
-        <h4>If you have any idea in your mind.</h4>
-        <p>I am an application developer with strong .net problem solving skills.</p>
--->
-    <div class="list">
-        <li><a href="#">7904900815</a></li>
-        <li><a href="#">aswath.adit@gmail.com</a></li>
+<!-- Page 2: About -->
+<section class="page" id="about">
+  <div class="page-inner">
+    <h2>About <em>me</em></h2>
+    <div class="about-grid">
+      <ul class="about-points">
+        <li>Expertise in designing and developing RESTful APIs for seamless communication between front-end and back-end.</li>
+        <li>Proficient in database design and optimization to ensure high-performance data management.</li>
+        <li>Turn client requirements into working solutions, taking each project from proof-of-concept through to full implementation.</li>
+        <li>Experience in integrating third-party services and APIs to enhance functionality.</li>
+        <li>Dedication to writing clean and maintainable code for scalable applications.</li>
+      </ul>
+      <aside class="skills" aria-label="Skills">
+        <h3>Backend and cloud</h3>
+        <ul>
+          <li>ASP.NET Core, ASP.NET MVC, Web APIs</li>
+          <li>C#, Python, LINQ, Entity Framework</li>
+          <li>AWS Lambda, API Gateway, SQS, SNS, S3, CloudFront</li>
+          <li>Step Functions, EventBridge, DynamoDB</li>
+          <li>Terraform, Docker, Azure DevOps</li>
+        </ul>
+        <h3>Data, observability, and tools</h3>
+        <ul>
+          <li>SQL Server, PostgreSQL, MySQL, DataStax Astra</li>
+          <li>Stored procedures and query optimization</li>
+          <li>Database migration from Oracle to SQL Server</li>
+          <li>Serilog, Splunk alerts and dashboards</li>
+          <li>HTML5, CSS, JavaScript, .NET MAUI</li>
+          <li>Visual Studio, GitHub, Postman, Cursor AI</li>
+        </ul>
+      </aside>
     </div>
+  </div>
+</section>
+
+<!-- Page 3: Experience and projects, side by side -->
+<section class="page" id="experience">
+  <div class="page-inner">
+    <div class="split">
+      <div>
+        <h2>Where I have <em>worked</em></h2>
+        <ol class="flow">
+          <li class="node">
+            <span class="dot"></span>
+            <div class="node-date">May 2021 to June 2023</div>
+            <div class="node-org">Syncfusion</div>
+            <div class="node-role">Software Engineer, Level 2</div>
+          </li>
+          <li class="node">
+            <span class="dot"></span>
+            <div class="node-date">June 2023 to August 2024</div>
+            <div class="node-org">Sweya Infotech</div>
+            <div class="node-role">Software Engineer</div>
+          </li>
+          <li class="node">
+            <span class="dot"></span>
+            <div class="node-date">August 2024 to April 2026</div>
+            <div class="node-org">Accenture</div>
+            <div class="node-role">Application Development Senior Analyst</div>
+          </li>
+          <li class="node">
+            <span class="dot"></span>
+            <div class="node-date">April 2026 to present</div>
+            <div class="node-org">UST</div>
+            <div class="node-role">Lead I, Software Engineering</div>
+          </li>
+        </ol>
+      </div>
+
+      <div>
+        <h2>Selected <em>work</em></h2>
+        <div class="projects">
+          <article class="project" tabindex="0">
+            <h3>Puget Sound Energy</h3>
+            <p class="project-label">Electricity and gas provider in the US</p>
+            <div class="stack"><span>.NET Core</span><span>AWS Lambda</span><span>API Gateway</span><span>S3</span><span>CloudFront</span><span>Terraform</span><span>Hangfire</span></div>
+          </article>
+          <article class="project" tabindex="0">
+            <h3>Bold Desk</h3>
+            <p class="project-label">Ticketing tool</p>
+            <div class="stack"><span>.NET</span><span>ASP.NET MVC</span><span>Web APIs</span><span>SQL Server</span></div>
+          </article>
+          <article class="project" tabindex="0">
+            <h3>Basic Home Loan</h3>
+            <p class="project-label">Fintech home loan application</p>
+            <div class="stack"><span>Complete backend handled</span></div>
+          </article>
+          <article class="project" tabindex="0">
+            <h3>Deluxe</h3>
+            <p class="project-label">Fintech and e-commerce</p>
+            <div class="stack"><span>.NET Core</span><span>.NET Framework</span><span>RabbitMQ</span><span>Migration</span></div>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="education">
+      <div><strong>Rajalakshmi Engineering College</strong>B.E. Electrical and Electronics Engineering, 2020</div>
+      <div><strong>Certification</strong>Docker Training Course for the Absolute Beginner</div>
+    </div>
+  </div>
+</section>
+
+<!-- Page 4: Contact -->
+<section class="page" id="contact">
+  <div class="page-inner">
+    <p class="contact-big">Let us build something <a href="mailto:aswath.adit@gmail.com">together</a>.</p>
 
     <div class="contact-icons">
-        <a href="https://www.facebook.com/aswathaman.m.75/"><i class='bx bxl-facebook'></i></a>
-        <a href="https://twitter.com/aswath_adit"><i class='bx bxl-twitter'></i></a>
-        <a href="https://instagram.com/aswath__m?utm_source=qr&igshid=MzNlNGNkZWQ4Mg%3D%3D"><i class='bx bxl-instagram-alt' ></i></a>
-        <a href="https://www.youtube.com/channel/UC-oCmRzzLWAMBDlSwx4Lvdg"><i class='bx bxl-youtube'></i></a>
-        <a href="https://github.com/AswathAadi"><i class='bx bxl-github'></i></a>
+      <a href="mailto:aswath.adit@gmail.com" title="aswath.adit@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.6V18h16V7.6l-8 6.2z"/></svg>
+      </a>
+      <a href="tel:+917904900815" title="+91 79049 00815" aria-label="Phone">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .6 3.6 1 1 0 0 1-.25 1z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/aswathm3" target="_blank" rel="noopener" title="linkedin.com/in/aswathm3" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2h18a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm2.5 7.5V19h2.9V9.5zM6.9 5a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2zM11 9.5V19h2.9v-4.8c0-1.3.3-2.5 1.8-2.5s1.5 1.4 1.5 2.6V19H20v-5.3c0-2.6-.6-4.6-3.6-4.6-1.5 0-2.4.8-2.8 1.6V9.5z"/></svg>
+      </a>
+      <a href="https://instagram.com/aswath__m" target="_blank" rel="noopener" title="instagram.com/aswath__m" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3"/></svg>
+      </a>
+      <a href="https://www.youtube.com/channel/UC-oCmRzzLWAMBDlSwx4Lvdg" target="_blank" rel="noopener" title="YouTube channel" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6z"/></svg>
+      </a>
+      <a href="https://github.com/AswathAadi" target="_blank" rel="noopener" title="github.com/AswathAadi" aria-label="GitHub">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
     </div>
 
-</div>
+    <form class="contact-form" id="contact-form">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="tel" name="mobile" placeholder="Your Mobile Number">
+      <textarea name="message" placeholder="How Can I Help You" required></textarea>
+      <button type="submit">Send Message</button>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
 
-    <div class="contact-form">
-        <form id = "form">
-            <input type="text" placeholder="Your Name" id="from_name" required>
-            <input type="text" placeholder="Your Email" id ="from_email" required>
-            <input type="text" placeholder="Your Mobile Number" id ="from_mobile">
-            <textarea type="text" id="from_message_data" cols="35" rows="10" placeholder="How Can I Help You " required></textarea>
-            <input type="submit" value="Send Message" id = "mail_button" onclick="SendEmail()" class="submit" required>
-        </form>
-    </div>
- </section>
 
-</main>
-    
+<script>
+  // Highlight the side index as the reader moves between pages
+  const links = document.querySelectorAll('.index a');
+  const sections = document.querySelectorAll('.page');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach((s) => observer.observe(s));
+
+  // Contact form: sends the message through EmailJS to the inbox
+  const EMAILJS = {
+    serviceId: 'service_x98w7xm',
+    templateId: 'template_jtd1kkl',
+    publicKey: 'PbrPXiEGwOpxwSVt2'
+  };
+
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  const submitButton = form.querySelector('button');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    submitButton.disabled = true;
+    status.textContent = 'Sending...';
+
+    try {
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: EMAILJS.serviceId,
+          template_id: EMAILJS.templateId,
+          user_id: EMAILJS.publicKey,
+          template_params: {
+            name: data.get('name'),
+            email: data.get('email'),
+            mobile: data.get('mobile') || 'Not given',
+            message: data.get('message')
+          }
+        })
+      });
+      if (!response.ok) throw new Error('Send failed: ' + response.status);
+      status.textContent = 'Thanks, your message has been sent.';
+      form.reset();
+    } catch (error) {
+      status.textContent = 'Sorry, the message could not be sent. Please email aswath.adit@gmail.com directly.';
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+</script>
 </body>
 </html>
